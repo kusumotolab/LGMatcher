@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'jp.kusumotolab'
+group 'com.github.kusumotolab'
 version '1.0.0-alpha'
 
 sourceCompatibility = 1.8

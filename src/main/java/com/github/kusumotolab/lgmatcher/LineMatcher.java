@@ -1,4 +1,4 @@
-package jp.kusumotolab.lgmatcher;
+package com.github.kusumotolab.lgmatcher;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,11 +15,11 @@ import com.github.gumtreediff.tree.ITree;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import jp.kusumotolab.lgmatcher.line.MayersDiff;
-import jp.kusumotolab.lgmatcher.line.entity.LineDiff;
-import jp.kusumotolab.lgmatcher.line.entity.LineMatch;
-import jp.kusumotolab.lgmatcher.line.entity.MatchInformation;
-import jp.kusumotolab.lgmatcher.line.entity.Range;
+import com.github.kusumotolab.lgmatcher.line.MayersDiff;
+import com.github.kusumotolab.lgmatcher.line.entity.LineDiff;
+import com.github.kusumotolab.lgmatcher.line.entity.LineMatch;
+import com.github.kusumotolab.lgmatcher.line.entity.MatchInformation;
+import com.github.kusumotolab.lgmatcher.line.entity.Range;
 
 public class LineMatcher extends Matcher {
 

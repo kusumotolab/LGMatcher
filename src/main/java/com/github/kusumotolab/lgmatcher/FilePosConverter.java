@@ -1,10 +1,10 @@
-package jp.kusumotolab.lgmatcher;
+package com.github.kusumotolab.lgmatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jp.kusumotolab.lgmatcher.line.entity.Range;
+import com.github.kusumotolab.lgmatcher.line.entity.Range;
 
 public class FilePosConverter {
 

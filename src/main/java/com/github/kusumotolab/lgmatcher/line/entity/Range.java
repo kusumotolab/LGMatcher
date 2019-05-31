@@ -1,4 +1,4 @@
-package jp.kusumotolab.lgmatcher.line.entity;
+package com.github.kusumotolab.lgmatcher.line.entity;
 
 public class Range {
 

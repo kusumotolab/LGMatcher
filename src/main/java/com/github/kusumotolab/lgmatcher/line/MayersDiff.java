@@ -1,17 +1,17 @@
-package jp.kusumotolab.lgmatcher.line;
+package com.github.kusumotolab.lgmatcher.line;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.github.kusumotolab.lgmatcher.line.entity.LineDiff;
+import com.github.kusumotolab.lgmatcher.line.entity.LineMatch;
+import com.github.kusumotolab.lgmatcher.line.entity.MatchInformation;
 import difflib.Chunk;
 import difflib.Delta;
 import difflib.Delta.TYPE;
 import difflib.DiffUtils;
 import difflib.Patch;
-import jp.kusumotolab.lgmatcher.line.entity.LineDiff;
-import jp.kusumotolab.lgmatcher.line.entity.LineMatch;
-import jp.kusumotolab.lgmatcher.line.entity.MatchInformation;
-import jp.kusumotolab.lgmatcher.line.entity.Range;
+import com.github.kusumotolab.lgmatcher.line.entity.Range;
 
 public class MayersDiff {
 

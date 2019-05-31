@@ -1,4 +1,4 @@
-package jp.kusumotolab.lgmatcher;
+package com.github.kusumotolab.lgmatcher;
 
 import com.github.gumtreediff.matchers.CompositeMatcher;
 import com.github.gumtreediff.matchers.MappingStore;
