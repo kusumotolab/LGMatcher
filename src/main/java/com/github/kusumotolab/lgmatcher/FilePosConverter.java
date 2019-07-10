@@ -24,7 +24,7 @@ public class FilePosConverter {
     }
   }
 
-  public int toLineNumber(final int pos) {
+  public int toLineNumber(final int pos) throws PositionException {
     final Integer cache = cacheMap.get(pos);
     if (cache != null) return cache;
 
@@ -35,6 +35,6 @@ public class FilePosConverter {
         return i + 1;
       }
     }
-    throw new RuntimeException("Over position.");
+    throw new PositionException();
   }
 }

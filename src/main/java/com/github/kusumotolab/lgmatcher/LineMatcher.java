@@ -45,35 +45,40 @@ public class LineMatcher extends Matcher {
     final Map<Integer, MatchInformation> lineToInformation = createLineToInformation(
         informationList);
 
-    final Multimap<Integer, ITree> dstLineToTree = createLineToTree(dst, dstPosConverter);
+    try {
+      final Multimap<Integer, ITree> dstLineToTree = createLineToTree(dst, dstPosConverter);
 
-    final Map<Range, Range> diffMap = createDiffMap(informationList);
-    final Multimap<Range, ITree> rangeToTree = createRangeToTree(
-        Lists.newArrayList(diffMap.values()), dst, dstPosConverter);
+      final Map<Range, Range> diffMap = createDiffMap(informationList);
+      final Multimap<Range, ITree> rangeToTree = createRangeToTree(
+          Lists.newArrayList(diffMap.values()), dst, dstPosConverter);
 
-    for (final ITree descendant : src.getDescendants()) {
-      final int startSrcLineNumber = srcPosConverter.toLineNumber(descendant.getPos());
-      final MatchInformation information = lineToInformation.get(startSrcLineNumber);
-      if (information == null || mappings.hasSrc(descendant)) {
-        continue;
+      for (final ITree descendant : src.getDescendants()) {
+        final int startSrcLineNumber = srcPosConverter.toLineNumber(descendant.getPos());
+        final MatchInformation information = lineToInformation.get(startSrcLineNumber);
+        if (information == null || mappings.hasSrc(descendant)) {
+          continue;
+        }
+        if (!information.isDiff()) {
+          final int endLineNumber = srcPosConverter.toLineNumber(descendant.getEndPos());
+          matchSameLine(descendant, dstLineToTree.get(startSrcLineNumber),
+              lineToInformation.get(endLineNumber));
+        } else {
+          final LineDiff diff = information.getDiff();
+          final Range dstRange = diff.getDstRange();
+          final Collection<ITree> candidates = rangeToTree.get(dstRange);
+          matchDiffLine(descendant, candidates);
+        }
       }
-      if (!information.isDiff()) {
-        final int endLineNumber = srcPosConverter.toLineNumber(descendant.getEndPos());
-        matchSameLine(descendant, dstLineToTree.get(startSrcLineNumber),
-            lineToInformation.get(endLineNumber));
-      } else {
-        final LineDiff diff = information.getDiff();
-        final Range dstRange = diff.getDstRange();
-        final Collection<ITree> candidates = rangeToTree.get(dstRange);
-        matchDiffLine(descendant, candidates);
-      }
+    } catch (final PositionException e) {
+      e.printStackTrace();
     }
   }
 
   private Multimap<Integer, ITree> createLineToTree(final ITree tree,
-      final FilePosConverter filePosConverter) {
+      final FilePosConverter filePosConverter) throws PositionException {
     final Multimap<Integer, ITree> multimap = ArrayListMultimap.create();
     for (final ITree descendant : tree.getDescendants()) {
+
       final int lineNumber = filePosConverter.toLineNumber(descendant.getPos());
       multimap.put(lineNumber, descendant);
     }
@@ -81,7 +86,7 @@ public class LineMatcher extends Matcher {
   }
 
   private void matchSameLine(final ITree srcTree, final Collection<ITree> candidates,
-      final MatchInformation endMatchInformation) {
+      final MatchInformation endMatchInformation) throws PositionException {
     if (endMatchInformation == null || endMatchInformation.isDiff()) {
       return;
     }
@@ -172,7 +177,7 @@ public class LineMatcher extends Matcher {
   }
 
   private Multimap<Range, ITree> createRangeToTree(final List<Range> rangeList, final ITree tree,
-      final FilePosConverter filePosConverter) {
+      final FilePosConverter filePosConverter) throws PositionException {
     final Multimap<Range, ITree> multimap = ArrayListMultimap.create();
 
     final Map<Integer, Range> lineToRange = createLineToRange(rangeList);
